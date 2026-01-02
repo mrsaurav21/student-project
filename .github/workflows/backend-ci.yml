@@ -17,6 +17,11 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
+      - name: Give execute permission to mvnw
+        run: |
+          cd gradechecker
+          chmod +x mvnw
+
       - name: Build backend
         run: |
           cd gradechecker
