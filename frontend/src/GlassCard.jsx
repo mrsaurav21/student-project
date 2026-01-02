@@ -18,7 +18,7 @@ function GlassCard() {
     }
   });
 
-  // 🔗 CONNECT TO JAVA BACKEND
+  // ✅ CONNECT TO RENDER BACKEND USING ENV VARIABLE
   const checkGrade = async () => {
     if (marks === "") return;
 
@@ -26,22 +26,21 @@ function GlassCard() {
       setLoading(true);
 
       const response = await axios.post(
-        "http://localhost:8080/api/grade",
+        `${import.meta.env.VITE_API_BASE_URL}/api/grade`,
         {
-          marks: Number(marks)   // DTO expects "marks"
+          marks: Number(marks)
         }
       );
 
       setResult(response.data);
     } catch (error) {
-      console.error("Error connecting backend:", error);
+      console.error("Backend error:", error);
       alert("Backend not reachable");
     } finally {
       setLoading(false);
     }
   };
 
-  // Floating text content
   const floatingText = result ? result.grade : "GRADE CHECKER";
 
   const floatingColor =
@@ -57,10 +56,8 @@ function GlassCard() {
 
   return (
     <>
-      {/* Floating Grade Text */}
       <FloatingText text={floatingText} color={floatingColor} />
 
-      {/* Glass Card */}
       <RoundedBox
         ref={cardRef}
         args={[3.6, 2.2, 0.15]}
